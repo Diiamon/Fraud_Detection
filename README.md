@@ -55,7 +55,7 @@ The app will open in your web browser, where you can interact with the fraud det
 ## Usage
 Once the app is running, you can explore the following sections:
 - **Project Overview**: An introduction to the fraud detection project and its goals.
-- **Data Visualization**: Interactive charts to explore features such as transaction amounts, user behaviors, and more.
+- **Data Visualisation**: Interactive charts to explore features such as transaction amounts, user behaviors, and more.
 - **Model Performance**: View key performance metrics and compare different models.
 - **Fraud Detection**: Use the trained model to predict fraud in new, unseen transaction data.
 
