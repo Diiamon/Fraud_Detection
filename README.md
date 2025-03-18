@@ -3,6 +3,13 @@
 ## Overview
 This project demonstrates the application of machine learning models to detect fraudulent activities in transaction data. By analysing historical data, the model identifies patterns and characteristics that indicate potential fraud. The goal is to provide actionable insights that can help prevent and detect fraud in real-time transactions.
 
+## Dataset Source
+
+The data used in this project is from the **Synthetic Financial Datasets For Fraud Detection** available on Kaggle. The dataset contains synthetic transaction data generated to simulate fraud detection scenarios. It was used to build and evaluate the fraud detection models in this project.
+
+You can access the dataset on Kaggle here: [Synthetic Financial Fraud Dataset](https://www.kaggle.com/datasets/ealaxi/paysim1)
+
+
 ## Project Structure
 - **Data Preprocessing**: The initial phase includes data cleaning and feature engineering to prepare the dataset for modeling.
 - **Modeling**: Various machine learning algorithms are used to build models, including Random Forest, Gradient Boosted Trees, and Neural Networks.
