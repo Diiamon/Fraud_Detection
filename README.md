@@ -7,6 +7,8 @@ This project demonstrates the application of machine learning models to detect f
 
 The data used in this project is from the **Synthetic Financial Datasets For Fraud Detection** available on Kaggle. The dataset contains synthetic transaction data generated to simulate fraud detection scenarios. It was used to build and evaluate the fraud detection models in this project.
 
+This dataset is quite large, making it impractical to upload to GitHub. As a result, Python was used for data manipulation and analysis, while Streamlit was employed for visualisations. To run the code, please download the dataset from the link below.
+
 You can access the dataset on Kaggle here: [Synthetic Financial Fraud Dataset](https://www.kaggle.com/datasets/ealaxi/paysim1)
 
 
