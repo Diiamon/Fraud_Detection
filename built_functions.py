@@ -6,16 +6,45 @@ from sklearn.ensemble import IsolationForest
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
+import os
+import kaggle
+import zipfile
 
+# Define the path to save the dataset
+dataset_path = 'Fraud_Detection/fraud_data.zip'
 
+# Function to download the dataset using the Kaggle API
+def download_dataset():
+    # If the dataset is already downloaded, skip downloading
+    if not os.path.exists(dataset_path):
+        print("Downloading the dataset...")
+        # Adjusting the dataset download command with correct path for your dataset
+        kaggle.api.dataset_download_file('ealaxi/paysim1', 'PS_20174392719_1491204439457_log.csv', path='Fraud_Detection/data/')
+        print("Download complete!")
+    else:
+        print("Dataset already downloaded.")
+
+# Function to extract the dataset (if it's a zip file)
+def extract_dataset():
+    if os.path.exists(dataset_path):
+        with zipfile.ZipFile(dataset_path, 'r') as zip_ref:
+            zip_ref.extractall('Fraud_Detection/data/')
+        print("Dataset extracted.")
+
+# Feature Engineering function
 @st.cache_resource
 def feature_engeneering(df):
-    df = df.copy()  # Create a copy to avoid modifying original data
+    df = df.copy()  # Create a copy to avoid modifying the original data
+    
+    # Feature engineering steps
     df['day'] = df['step'] // 24  # Convert hours to days
     df['hour'] = df['step'] % 24  # Extract the hour of the day
     df['time_of_day'] = pd.cut(df['hour'], bins=[0, 6, 12, 18, 24], labels=['Night', 'Morning', 'Afternoon', 'Evening'])
+    
+    # Transaction-related features
     df['transactions_per_day'] = df.groupby(['nameOrig', 'day'])['step'].transform('count')
     df['avg_transaction_amount'] = df.groupby('nameOrig')['amount'].transform('mean')
+    
     # Flag large transactions
     threshold = df['amount'].quantile(0.95)
     df['large_transaction'] = (df['amount'] > threshold).astype(int)
@@ -26,8 +55,9 @@ def feature_engeneering(df):
     # Count transactions per user per hour
     df['transactions_per_hour'] = df.groupby(['nameOrig', 'hour'])['step'].transform('count')
     
-    # Flag users who made more than 5 transactions in the same hour
+    # Flag users who made more than 2 transactions in the same hour
     df['rapid_transactions'] = (df['transactions_per_hour'] >= 2).astype(int)
+    
     # Ratio of amount transferred compared to original balance
     df['balance_change_ratio'] = df['amount'] / (df['oldbalanceOrg'] + 1)  # Add 1 to avoid division by zero
     
@@ -36,12 +66,19 @@ def feature_engeneering(df):
 
     return df
 
-
+# Function to load and preprocess the data
 @st.cache_resource
 def load_and_preprocess_data():
+    # Download and extract the dataset if it's not already present
+    download_dataset()
+    extract_dataset()
+    
     # Load data only once and cache it
-    data = pd.read_csv('PS_20174392719_1491204439457_log.csv')
-    return feature_engeneering(data)
+    df = pd.read_csv('Fraud_Detection/data/PS_20174392719_1491204439457_log.csv')
+    
+    # Apply feature engineering to the data
+    df = feature_engeneering(df)
+    return df
 
 @st.cache_resource
 def tranformation(df):
