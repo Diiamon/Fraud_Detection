@@ -39,9 +39,22 @@ def feature_engeneering(df):
 
 @st.cache_resource
 def load_and_preprocess_data():
-    # Load data only once and cache it
-    data = pd.read_csv('PS_20174392719_1491204439457_log.csv')
-    return feature_engeneering(data)
+     Load data only once and cache it
+     data = pd.read_csv('PS_20174392719_1491204439457_log.csv')
+     return feature_engeneering(data) 
+    
+    # Get path to this script
+    #base_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct absolute path to the CSV file (in the same folder as built_functions.py)
+    #file_path = os.path.join(base_dir, "PS_20174392719_1491204439457_log.csv")
+
+    # Optional: show where it’s looking
+    #st.write("Reading CSV from:", file_path)
+
+    # Load and return data
+    #data = pd.read_csv(file_path)
+    #return feature_engeneering(data)
 
 @st.cache_resource
 def tranformation(df):

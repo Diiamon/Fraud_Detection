@@ -1,4 +1,8 @@
-from built_functions import *
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from built_functions import * 
 import tooltip_messages
 import streamlit as st
 import pandas as pd
